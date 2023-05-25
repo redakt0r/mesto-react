@@ -11,13 +11,21 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
     "https://postimg.cc/06KY38RB"
   );
 
+  const [cards, setCards] = React.useState([]);
+
   React.useEffect(() => {
     api.getProfileData().then((res) => {
       setUserName(res.name);
       setUserDescription(res.about);
       setUserAvatar(res.avatar);
     });
-  });
+  }, []);
+
+  React.useEffect(() => {
+    api.getInitialCards().then((res) => {
+      setCards(res);
+    });
+  }, []);
 
   return (
     <>
@@ -47,7 +55,39 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
           />
         </section>
         <section className="cards" aria-label="Фотогалерея.">
-          <ul className="cards__list" />
+          <ul className="cards__list">
+            {cards.map((card) => {
+              return (
+                <li className="cards__item">
+                  <article className="card">
+                    <img
+                      src={card.link}
+                      alt={card.name}
+                      className="card__image"
+                    />
+                    <div className="card__wrapper">
+                      <h2 className="card__title">{card.name}</h2>
+                      <div className="card__like-wrapper">
+                        <button
+                          className="button card__like-button"
+                          type="button"
+                          aria-label="Лайк."
+                        />
+                        <p className="card__like-counter">
+                          {card.likes.length}
+                        </p>
+                      </div>
+                      <button
+                        className="button card__remove-button"
+                        type="button"
+                        aria-label="Удалить картинку"
+                      />
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
         </section>
       </main>
     </>

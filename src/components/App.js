@@ -124,7 +124,6 @@ function App() {
           onClose={closeAllPopups}
         />
         <ImagePopup />
-        <template id="cardTemplate" />
       </div>
     </>
   );
