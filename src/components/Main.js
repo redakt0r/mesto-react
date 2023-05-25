@@ -15,6 +15,17 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
+    Promise.all([api.getProfileData(), api.getInitialCards()]).then(
+      ([profileData, cardsData]) => {
+        setUserName(profileData.name);
+        setUserDescription(profileData.about);
+        setUserAvatar(profileData.avatar);
+        setCards(cardsData);
+      }
+    );
+  }, []);
+
+  /*   React.useEffect(() => {
     api.getProfileData().then((res) => {
       setUserName(res.name);
       setUserDescription(res.about);
@@ -26,7 +37,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
     api.getInitialCards().then((res) => {
       setCards(res);
     });
-  }, []);
+  }, []); */
 
   return (
     <>

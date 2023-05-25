@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm ";
 import ImagePopup from "./ImagePopup";
+import Input from "./Input";
 import React from "react";
 
 function App() {
@@ -46,26 +47,12 @@ function App() {
           onClose={closeAllPopups}
           children={
             <>
-              <input
-                className="popup__input popup__input_name_name"
-                name="name"
-                placeholder="Твое имя"
-                type="text"
-                minLength={2}
-                maxLength={40}
-                required
+              <Input name={"name"} placeholder={"Твое имя"} type={"text"} />
+              <Input
+                name={"about"}
+                placeholder={"Какова твоя профессия"}
+                type={"text"}
               />
-              <span className="popup__input-error popup__input-error_type_name" />
-              <input
-                className="popup__input popup__input_name_about"
-                name="about"
-                placeholder="Какова твоя профессия"
-                type="text"
-                minLength={2}
-                maxLength={200}
-                required
-              />
-              <span className="popup__input-error popup__input-error_type_about" />
             </>
           }
         />
@@ -77,24 +64,12 @@ function App() {
           onClose={closeAllPopups}
           children={
             <>
-              <input
-                className="popup__input popup__input_name_place"
-                name="place"
-                placeholder="Название"
-                type="text"
-                minLength={2}
-                maxLength={30}
-                required
+              <Input name={"place"} placeholder={"Название"} type={"text"} />
+              <Input
+                name={"link"}
+                placeholder={"Ссылка на картинку"}
+                type={"url"}
               />
-              <span className="popup__input-error popup__input-error_type_place" />
-              <input
-                className="popup__input popup__input_name_link"
-                name="link"
-                placeholder="Ссылка на картинку"
-                type="url"
-                required
-              />
-              <span className="popup__input-error popup__input-error_type_link" />
             </>
           }
         />
@@ -106,14 +81,11 @@ function App() {
           onClose={closeAllPopups}
           children={
             <>
-              <input
-                className="popup__input popup__input_name_avatar"
-                name="avatar"
-                placeholder="Ссылка на картинку"
-                type="url"
-                required
+              <Input
+                name={"avatar"}
+                placeholder={"Ссылка на картинку"}
+                type={"url"}
               />
-              <span className="popup__input-error popup__input-error_type_avatar" />
             </>
           }
         />
