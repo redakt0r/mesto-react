@@ -1,10 +1,18 @@
 import "../index.css";
 
-function Card({ card }) {
+function Card({ card, onCardClick }) {
+  const handleCardClick = () => {
+    onCardClick(card);
+  };
   return (
     <li className="cards__item">
       <article className="card">
-        <img src={card.link} alt={card.name} className="card__image" />
+        <img
+          src={card.link}
+          alt={card.name}
+          className="card__image"
+          onClick={handleCardClick}
+        />
         <div className="card__wrapper">
           <h2 className="card__title">{card.name}</h2>
           <div className="card__like-wrapper">

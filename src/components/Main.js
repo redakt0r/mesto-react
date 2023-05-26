@@ -3,7 +3,7 @@ import { api } from "../utils/Api";
 import React from "react";
 import Card from "./Card";
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   const [userName, setUserName] = React.useState("Жак Ив Кусто");
   const [userDescription, setUserDescription] = React.useState(
     "Исследователь океана"
@@ -24,20 +24,6 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
       }
     );
   }, []);
-
-  /*   React.useEffect(() => {
-    api.getProfileData().then((res) => {
-      setUserName(res.name);
-      setUserDescription(res.about);
-      setUserAvatar(res.avatar);
-    });
-  }, []);
-
-  React.useEffect(() => {
-    api.getInitialCards().then((res) => {
-      setCards(res);
-    });
-  }, []); */
 
   return (
     <>
@@ -69,7 +55,9 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
         <section className="cards" aria-label="Фотогалерея.">
           <ul className="cards__list">
             {cards.map((card) => {
-              return <Card card={card} />;
+              return (
+                <Card key={card._id} card={card} onCardClick={onCardClick} />
+              );
             })}
           </ul>
         </section>
