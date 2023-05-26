@@ -1,4 +1,3 @@
-import "../index.css";
 import { api } from "../utils/Api";
 import { useState, useEffect } from "react";
 import Card from "./Card";

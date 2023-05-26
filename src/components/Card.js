@@ -1,5 +1,3 @@
-import "../index.css";
-
 function Card({ card, onCardClick }) {
   const handleCardClick = () => {
     onCardClick(card);
