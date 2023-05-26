@@ -1,28 +1,27 @@
 import "../index.css";
 import { api } from "../utils/Api";
-import React from "react";
+import { useState, useEffect } from "react";
 import Card from "./Card";
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [userName, setUserName] = React.useState("Жак Ив Кусто");
-  const [userDescription, setUserDescription] = React.useState(
-    "Исследователь океана"
-  );
-  const [userAvatar, setUserAvatar] = React.useState(
-    "https://postimg.cc/06KY38RB"
-  );
+  const [userName, setUserName] = useState("не загружено...");
+  const [userDescription, setUserDescription] = useState("не загружено...");
+  const [userAvatar, setUserAvatar] = useState("");
 
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
-    Promise.all([api.getProfileData(), api.getInitialCards()]).then(
-      ([profileData, cardsData]) => {
+  useEffect(() => {
+    Promise.all([api.getProfileData(), api.getInitialCards()])
+      .then(([profileData, cardsData]) => {
         setUserName(profileData.name);
         setUserDescription(profileData.about);
         setUserAvatar(profileData.avatar);
         setCards(cardsData);
-      }
-    );
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
   }, []);
 
   return (

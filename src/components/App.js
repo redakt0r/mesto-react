@@ -1,40 +1,39 @@
-import Header from "./Header";
 import "../index.css";
+import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm ";
 import ImagePopup from "./ImagePopup";
 import Input from "./Input";
-import React from "react";
+import { useState } from "react";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
-  function handleEditProfileClick() {
+  const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
-  }
-  function handleAddPlaceClick() {
+  };
+  const handleAddPlaceClick = () => {
     setAddPlacePopupOpen(true);
-  }
-  function handleEditAvatarClick() {
+  };
+  const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true);
-  }
+  };
 
-  function closeAllPopups() {
+  const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setSelectedCard(null);
-  }
+  };
 
-  function handleCardClick(card) {
+  const handleCardClick = (card) => {
     setSelectedCard(card);
-  }
+  };
 
   return (
     <>
