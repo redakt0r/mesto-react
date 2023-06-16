@@ -32,7 +32,7 @@ function App() {
       });
   }, []);
 
-  //console.log(currentUser);
+  console.log(currentUser);
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
