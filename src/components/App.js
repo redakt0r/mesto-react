@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm ";
 import ImagePopup from "./ImagePopup";
 import Input from "./Input";
+import EditProfilePopup from "./EditProfilePopup";
 import { useEffect, useState } from "react";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -96,6 +97,17 @@ function App() {
       });
   };
 
+  const handleUpdateUser = (data) => {
+    api
+      .patchProfileData(data)
+      .then((res) => setCurrentUser(res))
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      })
+      .then(() => closeAllPopups());
+  };
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -111,22 +123,10 @@ function App() {
             onCardDelete={handleCardDelete}
           />
           <Footer />
-          <PopupWithForm
-            title={"Редактировать профиль"}
-            name={"profile"}
-            submitButtonText={"Сохранить"}
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
-            children={
-              <>
-                <Input name={"name"} placeholder={"Твое имя"} type={"text"} />
-                <Input
-                  name={"about"}
-                  placeholder={"Какова твоя профессия"}
-                  type={"text"}
-                />
-              </>
-            }
+            onUpdateUser={handleUpdateUser}
           />
           <PopupWithForm
             title={"Новое место"}
