@@ -1,20 +1,17 @@
 import { api } from "../utils/Api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [userName, setUserName] = useState("не загружено...");
-  const [userDescription, setUserDescription] = useState("не загружено...");
-  const [userAvatar, setUserAvatar] = useState("");
+  const currentUser = useContext(CurrentUserContext);
 
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    Promise.all([api.getProfileData(), api.getInitialCards()])
-      .then(([profileData, cardsData]) => {
-        setUserName(profileData.name);
-        setUserDescription(profileData.about);
-        setUserAvatar(profileData.avatar);
+    api
+      .getInitialCards()
+      .then((cardsData) => {
         setCards(cardsData);
       })
       .catch((err) => {
@@ -31,17 +28,21 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
             className="button profile__edit-button profile__edit-button_aim_avatar"
             onClick={onEditAvatar}
           >
-            <img src={userAvatar} alt="Аватар." className="profile__avatar" />
+            <img
+              src={currentUser.avatar}
+              alt="Аватар."
+              className="profile__avatar"
+            />
           </button>
           <div className="profile__info">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               className="button profile__edit-button profile__edit-button_aim_info"
               type="button"
               aria-label="Редактировать."
               onClick={onEditProfile}
             />
-            <p className="profile__occupation">{userDescription}</p>
+            <p className="profile__occupation">{currentUser.about}</p>
           </div>
           <button
             className="button profile__card-button"
