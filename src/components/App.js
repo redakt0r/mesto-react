@@ -20,19 +20,19 @@ function App() {
     about: "не загружено...",
     avatar: "",
   });
+  const [cards, setCards] = useState([]);
+
   useEffect(() => {
-    api
-      .getProfileData()
-      .then((profileData) => {
+    Promise.all([api.getProfileData(), api.getInitialCards()])
+      .then(([profileData, cardsData]) => {
         setCurrentUser(profileData);
+        setCards(cardsData);
       })
       .catch((err) => {
         console.log(err);
         alert(err);
       });
   }, []);
-
-  console.log(currentUser);
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
@@ -55,6 +55,47 @@ function App() {
     setSelectedCard(card);
   };
 
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    !isLiked
+      ? api
+          .putLike(card)
+          .then((newCard) => {
+            setCards((state) =>
+              state.map((c) => (c._id === card._id ? newCard : c))
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+            alert(err);
+          })
+      : api
+          .deleteLike(card)
+          .then((newCard) => {
+            setCards((state) =>
+              state.map((c) => (c._id === card._id ? newCard : c))
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+            alert(err);
+          });
+  };
+
+  const handleCardDelete = (card) => {
+    api
+      .deleteCard(card)
+      .then(() => {
+        setCards((cardsList) =>
+          cardsList.filter((item) => item._id !== card._id)
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
+  };
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -65,6 +106,9 @@ function App() {
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            cards={cards}
+            onCardDelete={handleCardDelete}
           />
           <Footer />
           <PopupWithForm
