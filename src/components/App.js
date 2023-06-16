@@ -5,6 +5,7 @@ import PopupWithForm from "./PopupWithForm ";
 import ImagePopup from "./ImagePopup";
 import Input from "./Input";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import { useEffect, useState } from "react";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -108,6 +109,17 @@ function App() {
       .then(() => closeAllPopups());
   };
 
+  const handleUpdateAvatar = (data) => {
+    api
+      .patchAvatar(data)
+      .then((res) => setCurrentUser(res))
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      })
+      .then(() => closeAllPopups());
+  };
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -145,21 +157,10 @@ function App() {
               </>
             }
           />
-          <PopupWithForm
-            title={"Обновить аватар"}
-            name={"avatar"}
-            submitButtonText={"Сохранить"}
+          <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            children={
-              <>
-                <Input
-                  name={"avatar"}
-                  placeholder={"Ссылка на картинку"}
-                  type={"url"}
-                />
-              </>
-            }
+            onUpdateAvatar={handleUpdateAvatar}
           />
           <PopupWithForm
             title={"Вы уверены?"}
