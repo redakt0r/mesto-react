@@ -2,8 +2,8 @@ import { useState } from "react";
 import PopupWithForm from "./PopupWithForm ";
 
 function AddPlacePopup({ isOpen, onClose, onAddNewPlace }) {
-  const [place, setPlace] = useState();
-  const [link, setLink] = useState();
+  const [place, setPlace] = useState("");
+  const [link, setLink] = useState("");
 
   const handlePlaceChange = (e) => {
     setPlace(e.target.value);
