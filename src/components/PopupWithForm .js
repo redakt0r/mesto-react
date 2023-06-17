@@ -14,7 +14,6 @@ function PopupWithForm({
         <form
           className={`popup__form popup__form_aim_${name}`}
           name={name}
-          noValidate
           onSubmit={onSubmit}
         >
           {children}

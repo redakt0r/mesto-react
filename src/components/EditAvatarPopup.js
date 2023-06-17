@@ -19,22 +19,19 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      children={
-        <>
-          <input
-            className={`popup__input popup__input_name_avatar`}
-            name={"avatar"}
-            placeholder={"Ссылка на картинку"}
-            type={"url"}
-            required
-            ref={avatarRef}
-          />
-          <span
-            className={`popup__input-error popup__input-error_type_avatar`}
-          />
-        </>
-      }
-    />
+    >
+      <>
+        <input
+          className={`popup__input popup__input_name_avatar`}
+          name={"avatar"}
+          placeholder={"Ссылка на картинку"}
+          type={"url"}
+          required
+          ref={avatarRef}
+        />
+        <span className={`popup__input-error popup__input-error_type_avatar`} />
+      </>
+    </PopupWithForm>
   );
 }
 

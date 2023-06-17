@@ -19,7 +19,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,33 +37,30 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      children={
-        <>
-          <input
-            className={`popup__input popup__input_name_name`}
-            name={"name"}
-            placeholder={"Твое имя"}
-            type={"text"}
-            required
-            value={name}
-            onChange={handleNameChange}
-          />
-          <span className={`popup__input-error popup__input-error_type_name`} />
-          <input
-            className={`popup__input popup__input_name_about`}
-            name={"about"}
-            placeholder={"Какова твоя профессия"}
-            type={"text"}
-            required
-            value={description}
-            onChange={handleDesctriptionChange}
-          />
-          <span
-            className={`popup__input-error popup__input-error_type_about`}
-          />
-        </>
-      }
-    />
+    >
+      <>
+        <input
+          className={`popup__input popup__input_name_name`}
+          name={"name"}
+          placeholder={"Твое имя"}
+          type={"text"}
+          required
+          value={name}
+          onChange={handleNameChange}
+        />
+        <span className={`popup__input-error popup__input-error_type_name`} />
+        <input
+          className={`popup__input popup__input_name_about`}
+          name={"about"}
+          placeholder={"Какова твоя профессия"}
+          type={"text"}
+          required
+          value={description}
+          onChange={handleDesctriptionChange}
+        />
+        <span className={`popup__input-error popup__input-error_type_about`} />
+      </>
+    </PopupWithForm>
   );
 }
 
