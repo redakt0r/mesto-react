@@ -6,6 +6,7 @@ import ImagePopup from "./ImagePopup";
 import Input from "./Input";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import { useEffect, useState } from "react";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -120,6 +121,19 @@ function App() {
       .then(() => closeAllPopups());
   };
 
+  const handleAddNewPlace = (newCard) => {
+    api
+      .postNewCard(newCard)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      })
+      .then(() => closeAllPopups());
+  };
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -140,22 +154,10 @@ function App() {
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
           />
-          <PopupWithForm
-            title={"Новое место"}
-            name={"cards"}
-            submitButtonText={"Создать"}
+          <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
-            children={
-              <>
-                <Input name={"place"} placeholder={"Название"} type={"text"} />
-                <Input
-                  name={"link"}
-                  placeholder={"Ссылка на картинку"}
-                  type={"url"}
-                />
-              </>
-            }
+            onAddNewPlace={handleAddNewPlace}
           />
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
